@@ -75,7 +75,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:
 .hero{position:relative;border-bottom:1px solid var(--line);overflow:hidden}
 .hero .wrap{position:relative;padding-block:34px 0}
 .hero-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.name{font-size:clamp(26px,7.1vw,108px);margin-top:46px;position:relative;z-index:2;white-space:nowrap}
+.name{font-size:clamp(22px,6.05vw,98px);display:inline-block;max-width:100%;margin-top:46px;position:relative;z-index:2;white-space:nowrap}
 .name>span{display:inline}
 .name .gap{display:inline-block;width:.28em}
 .name .two{color:transparent;-webkit-text-stroke:1.6px var(--fg);opacity:.9}
@@ -96,7 +96,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:
 .proof{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--line)}
 .proof div{padding:30px 22px;border-right:1px solid var(--line);min-width:0}
 .proof div:last-child{border-right:0}
-.proof strong{display:block;font-family:var(--display);font-stretch:115%;font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1;font-variant-numeric:tabular-nums}
+.proof strong{display:block;font-family:var(--display);font-stretch:100%;font-weight:800;font-size:clamp(26px,2.7vw,40px);white-space:nowrap;line-height:1;font-variant-numeric:tabular-nums}
 .proof span{display:block;margin-top:10px;font-size:13.5px;color:var(--muted);line-height:1.4}
 @media (max-width:900px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div{border-bottom:1px solid var(--line)}.proof div:nth-child(2n){border-right:0}.proof div:last-child{grid-column:1/-1;border-bottom:0}}
 
@@ -800,7 +800,6 @@ body.rv-lock{overflow:hidden}
     </div>
     <div class="nets">
       <a href="https://www.linkedin.com/in/devamoysengupta/" target="_blank" rel="noopener" id="liLink">linkedin.com/in/devamoysengupta ↗</a>
-      <a href="https://dewclo.in" target="_blank" rel="noopener">dewclo.in ↗</a>
     </div>
   </div>
   <form class="brief" id="form" novalidate>
@@ -1049,6 +1048,12 @@ body.rv-lock{overflow:hidden}
   addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeResume();});
   if(location.hash==='#resume') openResume();
 
+
+  /* fit name to one line, any font, any width */
+  (function(){const n=document.querySelector('.name');if(!n)return;
+    function fit(){n.style.fontSize='100px';const ps=getComputedStyle(n.parentElement);const avail=n.parentElement.clientWidth-parseFloat(ps.paddingLeft)-parseFloat(ps.paddingRight);const w=n.scrollWidth;if(!w)return;
+      n.style.fontSize=Math.max(20,Math.min(170,100*avail/w*0.985))+'px';}
+    fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);setTimeout(fit,600);})();
   /* ===== Interaction layer ===== */
   const fine = matchMedia('(pointer:fine)').matches;
 
